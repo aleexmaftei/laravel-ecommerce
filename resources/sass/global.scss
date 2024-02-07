@@ -1,0 +1,19 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    background: #3b3b3b;
+    margin: 0;
+    display: block;
+    font-family: "Open Sans", Verdana, Tahoma, Arial, Helvetica, sans-serif;
+    font-variant-ligatures: no-common-ligatures;
+}
+
+.eCommerce-page {
+    background: rgba(243,243,243,255);
+    max-width: 1440px;
+    min-width: 700px;
+    margin: 0 auto;
+}
