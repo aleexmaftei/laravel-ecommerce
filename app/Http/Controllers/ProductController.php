@@ -17,7 +17,7 @@ class ProductController extends BaseController
     public function index()
     {
         $products = $this->productRepository->get();
-        return response()->json($products, 200);
+        return View("product")->with("products", $products);
     }
 
     public function create()

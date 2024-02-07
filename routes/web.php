@@ -12,10 +12,9 @@ Route::controller(CategoryController::class)->prefix("category")->group(function
         ->name("category.show_subcategories");
 });
 
-Route::controller(ProductController::class)->prefix("products")->group(function () {
-    Route::get("/");
-    Route::post("/create");
-    Route::put("/update/{id}");
-    Route::delete("/delete/{id}");
+Route::controller(ProductController::class)->group(function () {
+    Route::get("/category/{id}/products", "index")
+        ->where("id", "\d+")
+        ->name("products.index");
 });
 
