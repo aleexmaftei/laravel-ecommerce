@@ -13,7 +13,7 @@
 @include("layout.navbar")
 
 <div class="eCommerce-page">
-    <main role="main" class="grid-container">
+    <main role="main" class="grid-container mt-5 mb-3">
         @yield("body-content")
     </main>
 </div>

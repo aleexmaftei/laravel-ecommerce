@@ -26,8 +26,10 @@
                                 </div>
 
                                 <div class="action-buttons">
-                                    <a href="#" class="btn btn-primary">Edit</a>
-                                    <a href="#" class="btn btn-primary">Buy</a>
+                                    <a href="{{route("products.edit", ["category_id" => $category_id, "product_id" => $product->id])}}"
+                                       class="btn btn-primary">Edit</a>
+                                    <a href=""
+                                       class="btn btn-primary">Buy</a>
                                 </div>
                             </div>
                         </div>

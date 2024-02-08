@@ -1,5 +1,5 @@
 <div class="title-wrapper">
-    <div class="d-flex mt-5 mb-3 justify-content-center">
+    <div class="d-flex justify-content-center">
         <span>Welcome to Fortissimo</span>
     </div>
 </div>
