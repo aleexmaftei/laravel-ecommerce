@@ -14,9 +14,10 @@
                     <input class="form-control" type="text" name="name" value="{{ old("name", $product->name) }}"/>
                 </label>
 
+
                 @error("name")
-                <div class="error">
-                    {{ $message }}
+                <div class="alert alert-danger">
+                    {{ $errors->first('name') }}
                 </div>
                 @enderror
             </div>
@@ -28,8 +29,8 @@
                 </label>
 
                 @error("price")
-                <div class="error">
-                    {{ $message }}
+                <div class="alert alert-danger">
+                    {{ $errors->first('price') }}
                 </div>
                 @enderror
             </div>
@@ -42,8 +43,8 @@
                 </label>
 
                 @error("tva_percentage")
-                <div class="error">
-                    {{ $message }}
+                <div class="alert alert-danger">
+                    {{ $errors->first('tva_percentage') }}
                 </div>
                 @enderror
             </div>
@@ -56,8 +57,8 @@
                 </label>
 
                 @error("quantity")
-                <div class="error">
-                    {{ $message }}
+                <div class="alert alert-danger">
+                    {{ $errors->first('quantity') }}
                 </div>
                 @enderror
             </div>

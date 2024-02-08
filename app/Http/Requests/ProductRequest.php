@@ -15,9 +15,9 @@ class ProductRequest extends FormRequest
     {
         return [
             "name" => ["required", "max:150"],
-            "quantity" => ["required", "min:0"],
-            "price" => ["required", "min:0"],
-            "tva_percentage" => ["required", "min:0", "max:100"]
+            "quantity" => ["required", "numeric", "min:0"],
+            "price" => ["required", "numeric", "min:0"],
+            "tva_percentage" => ["required", "numeric", "min:0", "max:100"]
         ];
     }
 }
