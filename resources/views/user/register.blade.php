@@ -11,7 +11,7 @@
             <p class="d-flex justify-content-center info-text">Please complete the form below to register</p>
             <hr />
 
-            <div class="panel-body d-flex">
+            <div class="panel-body">
                 <form method="POST" action="{{ route("user.store") }}">
                     @csrf
 
@@ -75,7 +75,7 @@
 
                     <div class="form-group d-flex justify-content-center align-items-center">
                         <input type="submit" value="Register" class="btn btn-primary" />
-                        <a href="#" class="ml-5 text-danger">Cancel</a>
+                        <a href="#" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>

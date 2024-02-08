@@ -36,5 +36,11 @@ Route::controller(UserController::class)->group(function () {
 
     Route::post("/register", "store")
         ->name("user.store");
+
+    Route::get("/login", "login_index")
+        ->name("user.login");
+
+    Route::post("/login", "login")
+        ->name("user.login");
 });
 

@@ -3,10 +3,12 @@
 namespace App\Services;
 
 use App\DTOs\User\RegisterUserDto;
+use App\DTOs\User\UserDto;
 use App\Enums\RoleEnum;
 use App\Models\User;
 use App\Repositories\User\IUserRepository;
 use App\Services\Base\BaseService;
+use Illuminate\Support\Facades\Auth;
 
 class UserService extends BaseService
 {
@@ -35,6 +37,18 @@ class UserService extends BaseService
         return $this->execute_in_transaction(function () use ($userDto) {
             $user = $this->createRegisterUser($userDto);
             return $this->userRepository->create($user->toArray());
+        });
+    }
+
+    public function login(UserDto $userDto)
+    {
+        return $this->execute_in_transaction(function () use ($userDto) {
+            $userArray = [
+                "email" => $userDto->email,
+                "password" => $userDto->password
+            ];
+
+            return Auth::attempt($userArray);
         });
     }
 }
