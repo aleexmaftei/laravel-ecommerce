@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -27,5 +28,13 @@ Route::controller(ProductController::class)->prefix("/category/{category_id}/pro
         ->where("category_id", "\d+")
         ->where("product_id", "\d+")
         ->name("products.update");
+});
+
+Route::controller(UserController::class)->group(function () {
+    Route::get("/register", "create")
+        ->name("user.create");
+
+    Route::post("/register", "store")
+        ->name("user.store");
 });
 
