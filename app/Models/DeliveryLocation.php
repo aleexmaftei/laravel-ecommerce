@@ -14,15 +14,18 @@ class DeliveryLocation extends Model
     protected $table = "delivery_location";
     protected $fillable = [
         "user_id",
-        "country_name",
-        "region_name",
-        "city_name",
+        "city_id",
         "address_detail",
         "postal_code"
     ];
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo("App/Models/User", "id");
+        return $this->belongsTo(User::class);
+    }
+
+    public function cities(): BelongsTo
+    {
+        return $this->belongsTo(City::class);
     }
 }
