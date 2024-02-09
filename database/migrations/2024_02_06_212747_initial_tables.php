@@ -76,7 +76,8 @@ return new class extends Migration {
             $table->string("region_name", 100);
             $table->string("city_name", 100);
             $table->string("address_detail", 255);
-            $table->unsignedInteger("postal_code");
+            $table->string("postal_code", 100);
+            $table->timestamps();
             $table->foreignId("user_id")
                 ->references("id")
                 ->on("user")
