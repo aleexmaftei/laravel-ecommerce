@@ -12,7 +12,7 @@
                         <div class="card-body d-inline-flex">
                             <div class="image">
                                 <img alt="Product image"
-                                     src="https://www.imgonline.com.ua/examples/enlarged-photo.jpg"/>
+                                     src="https://source.unsplash.com/random"/>
                             </div>
 
                             <div class="product-content">
