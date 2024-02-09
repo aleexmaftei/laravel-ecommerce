@@ -4,7 +4,6 @@ namespace App\Repositories\Base;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
 
 class BaseRepository implements IBaseRepository
 {
@@ -20,23 +19,23 @@ class BaseRepository implements IBaseRepository
         return $this->model::all();
     }
 
-    public function getById($id): Model | null
+    public function getById(int $id): Model | null
     {
-        return $this->model::query()->findOrFail($id);
+        return $this->model->query()->find($id);
     }
 
-    public function delete($id): ?bool
+    public function delete(int $id): ?bool
     {
         return $this->model->delete();
     }
 
     public function create(array $data)
     {
-        return $this->model::query()->create($data)->fresh();
+        return $this->model->query()->create($data)->fresh();
     }
 
-    public function update($id, array $data): bool|int|null
+    public function update(int $id, array $data): bool|int|null
     {
-        return $this->model::query()->findOrFail($id)?->update($data);
+        return $this->model->query()->find($id)?->update($data);
     }
 }

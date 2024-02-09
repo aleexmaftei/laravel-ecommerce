@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use App\Models\Base\Lookup;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Role extends Lookup
 {
     protected $table = "role";
 
-    public final const ADMIN = 1;
-    public final const USER = 2;
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
 }

@@ -1,7 +1,11 @@
 @vite("resources/sass/category.scss")
+@extends("layout.layout")
 
+@section("body-content")
 <div class="container">
     @if(!is_null($categories))
+        @include("home")
+
         <h2 class="d-flex justify-content-center">Categories</h2>
     @elseif(!is_null($subcategories))
         <h2 class="d-flex justify-content-center">Subcategories</h2>
@@ -15,7 +19,7 @@
                 @foreach($categories as $category)
                     <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 mb-4 mt-2">
                         <div class="card-wrapper">
-                            <a href="{{ route("category.show_subcategories", ["id" => $category->id]) }}">
+                            <a href="{{ route("category.show_subcategories", ["category_id" => $category->id]) }}">
                                 <div class="d-inline-flex align-items-center">
                                     <img class="image" alt="Product category image"
                                          src="https://www.imgonline.com.ua/examples/enlarged-photo.jpg"/>
@@ -31,7 +35,7 @@
                 @foreach($subcategories as $subcategory)
                     <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 mb-4 mt-2">
                         <div class="card-wrapper">
-                            <a href="">
+                            <a href="{{ route("products.index", ["category_id" => $subcategory->id]) }}">
                                 <div class="d-inline-flex align-items-center">
                                     <img class="image" alt="Product category image"
                                          src="https://www.imgonline.com.ua/examples/enlarged-photo.jpg"/>
@@ -48,3 +52,4 @@
         </div>
     </div>
 </div>
+@endsection

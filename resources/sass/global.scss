@@ -17,3 +17,27 @@ body {
     min-width: 700px;
     margin: 0 auto;
 }
+
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.form-group {
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    background: #fff;
+    border-radius: 1.45rem;
+}
+
+label {
+    span {
+        color: #495057;
+        margin-left: 0.5rem;
+        font-size: 16px;
+    }
+}

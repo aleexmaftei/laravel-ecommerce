@@ -18,13 +18,16 @@ class CategoryController extends BaseController
     {
         $categories = $this->categoryRepository->getCategories();
 
-        return View("home")->with("categories", $categories)->with("subcategories");
+        return View("category")->with("categories", $categories)->with("subcategories");
     }
 
-    public function show_subcategory(int $id)
+    public function show_subcategory(int $category_id)
     {
-        $subcategories = $this->categoryRepository->getSubcategoriesByCategoryId($id);
+        $subcategories = $this->categoryRepository->getSubcategoriesByCategoryId($category_id);
 
-        return View("home")->with("subcategories", $subcategories)->with("categories");
+        return View("category")
+            ->with("subcategories", $subcategories)
+            ->with("category_id", $category_id)
+            ->with("categories");
     }
 }

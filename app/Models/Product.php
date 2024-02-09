@@ -16,6 +16,8 @@ class Product extends Model
     protected $fillable = [
         "name",
         "quantity",
+        "price",
+        "tva_percentage"
     ];
 
     public function category(): BelongsToMany
