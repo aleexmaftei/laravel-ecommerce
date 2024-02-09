@@ -45,7 +45,7 @@ class UserService extends BaseService
         return $this->execute_in_transaction(function () use ($userDto) {
             $userArray = [
                 "email" => $userDto->email,
-                "password" => $userDto->password
+                "password" => $userDto->password // TODO: is it salted from user input?
             ];
 
             return Auth::attempt($userArray);

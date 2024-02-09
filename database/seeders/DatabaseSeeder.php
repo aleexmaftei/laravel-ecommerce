@@ -15,8 +15,11 @@ class DatabaseSeeder extends Seeder
         $this->call(CitySeeder::class);
 
         // Dev seed
-        if (app()->environment() === "development") {
-            // TODO:
+        if (app()->environment() === "local") {
+            $this->call(CategorySeeder::class);
+            $this->call(UserSeeder::class);
+            $this->call(DeliveryLocationSeeder::class);
+            $this->call(ProductSeeder::class);
         }
     }
 }
