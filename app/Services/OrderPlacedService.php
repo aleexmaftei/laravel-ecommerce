@@ -12,16 +12,19 @@ use Illuminate\Validation\ValidationException;
 class OrderPlacedService extends BaseService
 {
     private IProductRepository $productRepository;
+    private ProductService $productService;
     private IOrderPlacedRepository $orderPlacedRepository;
     private IDeliveryLocationRepository $deliveryLocationRepository;
     private NotificationService $notificationService;
 
-    public function __construct(IProductRepository $productRepository,
-                                IOrderPlacedRepository $orderPlacedRepository,
+    public function __construct(IProductRepository          $productRepository,
+                                ProductService              $productService,
+                                IOrderPlacedRepository      $orderPlacedRepository,
                                 IDeliveryLocationRepository $deliveryLocationRepository,
-                                NotificationService $notificationService)
+                                NotificationService         $notificationService)
     {
         $this->productRepository = $productRepository;
+        $this->productService = $productService;
         $this->orderPlacedRepository = $orderPlacedRepository;
         $this->deliveryLocationRepository = $deliveryLocationRepository;
         $this->notificationService = $notificationService;
@@ -62,6 +65,8 @@ class OrderPlacedService extends BaseService
             ];
 
             $this->orderPlacedRepository->create($order);
+
+            $this->productService->changeQuantity($bought_product->id, $bought_product->quantity - $orderPlacedDto->quantity);
 
             $this->notificationService->notifyOrderCompleteForUser($bought_product->user_id);
         });

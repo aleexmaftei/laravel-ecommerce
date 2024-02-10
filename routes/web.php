@@ -31,12 +31,12 @@ Route::controller(ProductController::class)->prefix("/category/{category_id}/pro
         ->name("products.update");
 });
 
-Route::controller(OrderPlacedController::class)->group(function () {
+Route::controller(OrderPlacedController::class)->middleware("auth")->group(function () {
    Route::post("/", "store")->name("place.order");
    Route::get("/checkout/product/{product_id}", "checkout")
        ->where("product_id", "\d+")
        ->name("order.checkout");
-})->middleware("auth");
+});
 
 Route::controller(UserController::class)->group(function () {
     Route::get("/register", "create")

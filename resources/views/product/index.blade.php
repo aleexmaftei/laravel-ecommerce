@@ -11,7 +11,7 @@
                         <div class="card-body d-inline-flex">
                             <div class="image">
                                 <img alt="Product image"
-                                     src="https://source.unsplash.com/random"/>
+                                     src="{{ $product->image }}"/>
                             </div>
 
                             <div class="product-content">

@@ -57,7 +57,7 @@ class UserController extends Controller
     {
         Session::flush();
         Auth::logout();
-        return redirect("home");
+        return redirect("/");
     }
 
     public function destroy(string $id)

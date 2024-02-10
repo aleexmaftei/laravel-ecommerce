@@ -37,6 +37,21 @@ class ProductService extends BaseService
 
             return $this->productRepository->update($product_id, $product_array);
         });
+    }
 
+    public function changeQuantity(int $id, int $new_quantity): void
+    {
+        $product = $this->productRepository->getById($id);
+        if (!$product) {
+            abort(404);
+        }
+
+        if ($product->quantity - $new_quantity < 0) {
+            abort(500);
+        }
+
+        $product = [...$product->toArray(), "quantity" => $new_quantity];
+
+        $this->productRepository->update($id, $product);
     }
 }

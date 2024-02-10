@@ -21,7 +21,7 @@
             </div>
             @enderror
 
-            <hr/>
+            <br>
             <div class="delivery-locations">
                 <div class="order-addresses-wrapper">
                     <p>Choose a billing address</p>
@@ -38,6 +38,7 @@
                                     <span>Postal code: {{ $delivery_location->postal_code }}</span>
                                 </label>
                             </div>
+                            <hr />
                         @endforeach
                     </div>
                 </div>
