@@ -11,8 +11,8 @@ class ProductCategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            "product_id" => Product::all()->random()->first()->id,
-            "category_id" => Category::all()->where("parent_category_id", "!=", null)->random()->first()->id,
+            "product_id" => Product::all()->random()->id,
+            "category_id" => Category::all()->where("parent_category_id", "!=", null)->random()->id,
         ];
     }
 }

@@ -14,7 +14,7 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => $this->faker->text(25),
-            'parent_category_id' => Category::count() < 20 ? null : Category::all()->random()->first()->id,
+            'parent_category_id' => Category::count() < 10 ? null : Category::all()->random()->id,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];
