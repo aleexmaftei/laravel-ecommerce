@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DeliveryLocation extends Model
@@ -28,5 +29,10 @@ class DeliveryLocation extends Model
     public function cities(): BelongsTo
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function orderProduct(): HasMany
+    {
+        return $this->HasMany(OrderPlaced::class);
     }
 }

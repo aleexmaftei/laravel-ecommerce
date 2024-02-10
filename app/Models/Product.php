@@ -5,7 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
@@ -21,8 +22,17 @@ class Product extends Model
         "tva_percentage"
     ];
 
-    public function category(): BelongsToMany
+    protected $guarded = [
+        "user_id"
+    ];
+
+    public function productCategories(): HasMany
     {
-        return $this->belongsToMany("App/Models/Category", "id");
+        return $this->hasMany(ProductCategory::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

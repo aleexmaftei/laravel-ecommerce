@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Product;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
@@ -16,6 +16,7 @@ class ProductFactory extends Factory
             'quantity' => $this->faker->numberBetween(0, 1000),
             'price' => $this->faker->randomNumber(5),
             'tva_percentage' => $this->faker->numberBetween(0, 100),
+            'user_id' => User::all()->random()->id,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

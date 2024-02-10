@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderPlacedController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,13 @@ Route::controller(ProductController::class)->prefix("/category/{category_id}/pro
         ->where("product_id", "\d+")
         ->name("products.update");
 });
+
+Route::controller(OrderPlacedController::class)->group(function () {
+   Route::post("/", "store")->name("place.order");
+   Route::get("/checkout/product/{product_id}", "checkout")
+       ->where("product_id", "\d+")
+       ->name("order.checkout");
+})->middleware("auth");
 
 Route::controller(UserController::class)->group(function () {
     Route::get("/register", "create")

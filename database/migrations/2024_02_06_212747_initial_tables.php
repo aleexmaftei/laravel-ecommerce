@@ -48,6 +48,13 @@ return new class extends Migration {
             $table->unsignedInteger("quantity")->default(0);
             $table->unsignedInteger("price");
             $table->unsignedSmallInteger("tva_percentage");
+
+            $table->foreignId("user_id")
+                ->nullable()
+                ->references("id")
+                ->on("user")
+                ->noActionOnDelete();
+
             $table->timestamps();
             $table->softDeletes();
         });
@@ -77,11 +84,14 @@ return new class extends Migration {
             $table->string("city_name", 100);
             $table->string("address_detail", 255);
             $table->string("postal_code", 100);
-            $table->timestamps();
+
             $table->foreignId("user_id")
                 ->references("id")
                 ->on("user")
                 ->cascadeOnDelete();
+
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

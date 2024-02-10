@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -35,6 +36,16 @@ class User extends Authenticatable
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function buyerOrdersPlaced(): HasMany
+    {
+        return $this->hasMany(OrderPlaced::class, "buyer_user_id", "id");
+    }
+
+    public function sellerOrdersPlaced(): HasMany
+    {
+        return $this->hasMany(OrderPlaced::class, "seller_user_id", "id");
     }
 
     public function hasRole($role): bool
