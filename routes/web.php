@@ -50,5 +50,9 @@ Route::controller(UserController::class)->group(function () {
 
     Route::post("/login", "login")
         ->name("user.login");
+
+    Route::post("/logout", "logout")
+        ->name("user.logout")
+        ->middleware("auth");
 });
 

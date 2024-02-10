@@ -8,6 +8,8 @@ use App\Http\Requests\User\RegisterUserRequest;
 use App\Http\Requests\User\UserRequest;
 use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -49,6 +51,13 @@ class UserController extends Controller
         }
 
         return redirect()->route("home");
+    }
+
+    public function logout()
+    {
+        Session::flush();
+        Auth::logout();
+        return redirect("home");
     }
 
     public function destroy(string $id)

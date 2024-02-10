@@ -21,7 +21,7 @@ class ProductController extends BaseController
 
     public function index(int $category_id)
     {
-        $products = $this->productRepository->get();
+        $products = $this->productRepository->getProductsByCategoryId($category_id);
         return View("product.index")
             ->with("category_id", $category_id)
             ->with("products", $products);
