@@ -24,16 +24,6 @@ class OrderPlacedController extends Controller
         $this->deliveryLocationRepository = $deliveryLocationRepository;
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function checkout(int $product_id)
     {
         $product = $this->productRepository->getById($product_id);
@@ -52,9 +42,6 @@ class OrderPlacedController extends Controller
             ->with("delivery_locations", $delivery_locations);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(OrderPlacedRequest $orderPlacedRequest): RedirectResponse
     {
         $placedOrderDto = OrderPlacedDto::create($orderPlacedRequest);
@@ -62,13 +49,5 @@ class OrderPlacedController extends Controller
         $this->orderPlacedService->create($placedOrderDto);
 
         return redirect()->route("home");
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 }
