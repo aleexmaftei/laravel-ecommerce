@@ -44,6 +44,7 @@ Route::controller(ProductController::class)->group(function () {
 
     Route::middleware("auth")
         ->delete("/destroy/{product_id}", "destroy")
+        ->can("can-delete-product")
         ->where("product_id", "\d+")
         ->name("products.destroy");
 });

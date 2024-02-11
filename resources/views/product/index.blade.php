@@ -23,23 +23,28 @@
                                 <div class="price">
                                     <h4>{{ $product->price }}</h4>
                                 </div>
+                                @auth("web")
+                                    <div class="action-buttons">
+                                        @can("can-delete-product")
+                                            <form method="POST"
+                                                  action="{{ route("products.destroy", ["product_id" => $product->id]) }}">
+                                                @csrf
+                                                @method("delete")
 
-                                <div class="action-buttons">
-                                    <form method="POST"
-                                          action="{{ route("products.destroy", ["product_id" => $product->id]) }}">
-                                        @csrf
-                                        @method("delete")
+                                                <button type="submit" class="btn btn-danger">
+                                                    <span class="material-symbols-outlined">delete</span>
+                                                </button>
+                                            </form>
+                                        @endcan
 
-                                        <button type="submit" class="btn btn-danger">
-                                            <span class="material-symbols-outlined">delete</span>
-                                        </button>
-                                    </form>
-
-                                    <a href="{{ route("products.edit", ["category_id" => $category_id, "product_id" => $product->id]) }}"
-                                       class="btn btn-primary">Edit</a>
-                                    <a href="{{ route("order.checkout", ["product_id" => $product->id]) }}"
-                                       class="btn btn-primary">Buy</a>
-                                </div>
+                                        @can("can-edit-product", $product)
+                                            <a href="{{ route("products.edit", ["category_id" => $category_id, "product_id" => $product->id]) }}"
+                                               class="btn btn-primary">Edit</a>
+                                        @endcan
+                                        <a href="{{ route("order.checkout", ["product_id" => $product->id]) }}"
+                                           class="btn btn-primary">Buy</a>
+                                    </div>
+                                @endauth
                             </div>
                         </div>
                     </div>
