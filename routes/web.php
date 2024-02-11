@@ -54,6 +54,9 @@ Route::controller(OrderPlacedController::class)->middleware("auth")->group(funct
     Route::get("/checkout/product/{product_id}", "checkout")
         ->where("product_id", "\d+")
         ->name("order.checkout");
+
+    Route::put("/notifications/mark-as-read", "mark_as_read")
+        ->name("notifications.mark_as_read");
 });
 
 Route::controller(UserController::class)->group(function () {

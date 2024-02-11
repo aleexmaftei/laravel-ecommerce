@@ -21,10 +21,11 @@ class Product extends Model
         "price",
         "tva_percentage",
         "short_description",
-        "description"
+        "description",
+        "user_id"
     ];
 
-    protected $guarded = [
+    protected $hidden = [
         "user_id"
     ];
 

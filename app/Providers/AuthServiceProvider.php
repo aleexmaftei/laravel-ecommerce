@@ -34,5 +34,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define("can-delete-product", static function(User $user) {
             return $user->id === RoleEnum::ADMIN->value;
         });
+
+        Gate::define("can-buy-own-products", static function(User $user, Product $product) {
+            return $product->user()->value("id") === $user->id;
+        });
     }
 }

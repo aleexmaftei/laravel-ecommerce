@@ -41,8 +41,11 @@
                                             <a href="{{ route("products.edit", ["category_id" => $category_id, "product_id" => $product->id]) }}"
                                                class="btn btn-primary">Edit</a>
                                         @endcan
-                                        <a href="{{ route("order.checkout", ["product_id" => $product->id]) }}"
-                                           class="btn btn-primary">Buy</a>
+
+                                        @cannot("can-buy-own-products", $product)
+                                            <a href="{{ route("order.checkout", ["product_id" => $product->id]) }}"
+                                               class="btn btn-primary">Buy</a>
+                                        @endcan
                                     </div>
                                 @endauth
                             </div>

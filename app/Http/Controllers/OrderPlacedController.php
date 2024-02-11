@@ -8,6 +8,8 @@ use App\Repositories\DeliveryLocation\IDeliveryLocationRepository;
 use App\Repositories\Product\IProductRepository;
 use App\Services\OrderPlacedService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class OrderPlacedController extends BaseController
 {
@@ -30,6 +32,10 @@ class OrderPlacedController extends BaseController
         if (!$product) {
             abort(404);
         }
+        
+        if(Gate::allows("can-buy-own-products", $product)) {
+            abort(403);
+        }
 
         $user = auth()->user();
         $delivery_locations = [];
@@ -49,5 +55,12 @@ class OrderPlacedController extends BaseController
         $this->orderPlacedService->create($placedOrderDto);
 
         return redirect()->route("home");
+    }
+
+    public function mark_as_read(): RedirectResponse
+    {
+        Auth::user()->unreadNotifications->markAsRead();
+
+        return redirect()->back();
     }
 }

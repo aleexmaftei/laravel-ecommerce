@@ -22,18 +22,35 @@
 
                     @auth("web")
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link icon-class" role="button" data-bs-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false">
+                            <a class="btn nav-link icon-class"
+                               data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="material-symbols-outlined">notifications</span>
                                 <span
                                     class="badge bg-success badge-xs icon-number">{{ auth()->user()->unreadNotifications->count() }}</span>
                             </a>
+
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                @if (auth()->user()->unreadNotifications)
+                                    <li class="dropdown-item">
+                                        <form method="POST" action="{{ route("notifications.mark_as_read") }}">
+                                            @csrf
+                                            @method('PUT')
+
+                                            <button class="no-style-button" type="submit" href="{{ route("notifications.mark_as_read") }}">
+                                                <span>Mark all as read</span>
+                                            </button>
+                                        </form>
+                                    </li>
+                                @endif
+                            </ul>
+
                         </li>
 
                         <li class="nav-item dropdown">
                             <a class="btn nav-link dropdown-toggle"
                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="user-name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span>
+                                <span
+                                    class="user-name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span>
                             </a>
 
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
