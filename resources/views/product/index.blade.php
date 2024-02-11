@@ -25,6 +25,16 @@
                                 </div>
 
                                 <div class="action-buttons">
+                                    <form method="POST"
+                                          action="{{ route("products.destroy", ["product_id" => $product->id]) }}">
+                                        @csrf
+                                        @method("delete")
+
+                                        <button type="submit" class="btn btn-danger">
+                                            <span class="material-symbols-outlined">delete</span>
+                                        </button>
+                                    </form>
+
                                     <a href="{{ route("products.edit", ["category_id" => $category_id, "product_id" => $product->id]) }}"
                                        class="btn btn-primary">Edit</a>
                                     <a href="{{ route("order.checkout", ["product_id" => $product->id]) }}"

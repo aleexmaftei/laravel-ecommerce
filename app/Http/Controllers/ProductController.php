@@ -9,6 +9,7 @@ use App\Http\Requests\Product\StoreProductRequest;
 use App\Repositories\Product\IProductRepository;
 use App\Services\ProductService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 
 class ProductController extends BaseController
 {
@@ -55,6 +56,9 @@ class ProductController extends BaseController
     public function edit(int $category_id, int $product_id)
     {
         $product = $this->productRepository->getById($product_id);
+        if (!$product) {
+            abort(404);
+        }
 
         return View("product.edit")
             ->with("category_id", $category_id)
@@ -73,8 +77,18 @@ class ProductController extends BaseController
         return redirect()->route("products.index", [$category_id]);
     }
 
-    public function destroy(string $id)
+    public function destroy(int $product_id): RedirectResponse
     {
-        //
+        $product = $this->productRepository->getById($product_id);
+        if (!$product) {
+            abort(404);
+        }
+
+        $is_deleted = $this->productRepository->delete($product);
+        if(!$is_deleted) {
+            abort(500);
+        }
+
+        return Redirect::back();
     }
 }

@@ -24,9 +24,9 @@ class BaseRepository implements IBaseRepository
         return $this->model->query()->find($id);
     }
 
-    public function delete(int $id): ?bool
+    public function delete(Model $model): ?bool
     {
-        return $this->model->delete();
+        return $model->delete();
     }
 
     public function create(array $data)
