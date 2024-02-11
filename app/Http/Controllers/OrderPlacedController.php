@@ -9,7 +9,7 @@ use App\Repositories\Product\IProductRepository;
 use App\Services\OrderPlacedService;
 use Illuminate\Http\RedirectResponse;
 
-class OrderPlacedController extends Controller
+class OrderPlacedController extends BaseController
 {
     private OrderPlacedService $orderPlacedService;
     private IProductRepository $productRepository;
