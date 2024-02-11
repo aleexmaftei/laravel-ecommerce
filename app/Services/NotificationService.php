@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Mail\ContractOrderMail;
+use App\Models\DeliveryLocation;
 use App\Models\Product;
 use App\Models\User;
 use App\Notifications\OrderNotification;
@@ -27,15 +28,26 @@ class NotificationService
     }
 
     public function emailContractForOwnerOnOrderCompleteByUserId(
-        int     $owner_user_id,
-        Product $bought_product,
-        int     $quantity,
-        User    $buyer_user
+        int              $seller_user_id,
+        Product          $bought_product,
+        int              $quantity,
+        User             $buyer_user,
+        DeliveryLocation $buyer_delivery_location,
+        DeliveryLocation $seller_delivery_location
     ): void
     {
-        $owner_user = $this->userRepository->getById($owner_user_id);
-        if ($owner_user) {
-            Mail::to($owner_user->email)->send(new ContractOrderMail($bought_product, $quantity, $buyer_user));
+        $seller_user = $this->userRepository->getById($seller_user_id);
+        if ($seller_user) {
+            Mail::to($seller_user->email)->send(
+                new ContractOrderMail(
+                    $bought_product,
+                    $quantity,
+                    $buyer_user,
+                    $seller_user,
+                    $buyer_delivery_location,
+                    $seller_delivery_location
+                )
+            );
         }
     }
 }

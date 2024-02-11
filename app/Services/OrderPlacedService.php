@@ -72,11 +72,18 @@ class OrderPlacedService extends BaseService
             );
 
             $this->notificationService->notifyOrderCompleteForUser($bought_product->user_id);
+
+            $seller_delivery_location = $this->deliveryLocationRepository
+                ->getDeliveryLocationsByUserId($bought_product->user_id)
+                ->first();
+
             $this->notificationService->emailContractForOwnerOnOrderCompleteByUserId(
                 $bought_product->user_id,
                 $bought_product,
                 $orderPlacedDto->quantity,
-                $buyer_user
+                $buyer_user,
+                $delivery_location,
+                $seller_delivery_location
             );
         });
     }
