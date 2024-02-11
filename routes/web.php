@@ -23,13 +23,11 @@ Route::controller(ProductController::class)->group(function () {
 
         Route::middleware("auth")->group(function () {
             Route::get("/edit/{product_id}", "edit")
-                ->can("can_edit_product")
                 ->where("category_id", "\d+")
                 ->where("product_id", "\d+")
                 ->name("products.edit");
 
             Route::put("/edit/{product_id}", "update")
-                ->can("can_edit_product")
                 ->where("category_id", "\d+")
                 ->where("product_id", "\d+")
                 ->name("products.update");
