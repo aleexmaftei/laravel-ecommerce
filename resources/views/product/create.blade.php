@@ -65,14 +65,28 @@
             </div>
 
             <div class="form-group">
-                <label class="form-label" for="image">
-                    <span>Image</span>
-                    <input type="file" class="form-control" name="image"/>
+                <label for="short_description">
+                    <span>Short description</span>
+                    <textarea class="form-control" name="short_description">{{ old("short_description") }}</textarea>
                 </label>
 
-                @error("image")
+                @error("short_description")
                 <div class="alert alert-danger">
-                    {{ $errors->first("image") }}
+                    {{ $errors->first('short_description') }}
+                </div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="description">
+                    <span>Description</span>
+                    <textarea class="form-control" name="description"> {{ old("description") }}</textarea>
+                </label>
+
+
+                @error("description")
+                <div class="alert alert-danger">
+                    {{ $errors->first('description') }}
                 </div>
                 @enderror
             </div>

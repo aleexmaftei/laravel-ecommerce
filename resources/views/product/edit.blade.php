@@ -63,6 +63,33 @@
                 @enderror
             </div>
 
+            <div class="form-group">
+                <label for="short_description">
+                    <span>Short description</span>
+                    <textarea class="form-control" name="short_description"> {{ old("short_description", $product->short_description) }}</textarea>
+                </label>
+
+                @error("short_description")
+                <div class="alert alert-danger">
+                    {{ $errors->first('short_description') }}
+                </div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="description">
+                    <span>Description</span>
+                    <textarea class="form-control" name="description"> {{ old("description", $product->description) }}</textarea>
+                </label>
+
+
+                @error("description")
+                <div class="alert alert-danger">
+                    {{ $errors->first('description') }}
+                </div>
+                @enderror
+            </div>
+
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>

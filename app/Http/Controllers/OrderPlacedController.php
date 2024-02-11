@@ -8,8 +8,10 @@ use App\Repositories\DeliveryLocation\IDeliveryLocationRepository;
 use App\Repositories\Product\IProductRepository;
 use App\Services\OrderPlacedService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
-class OrderPlacedController extends Controller
+class OrderPlacedController extends BaseController
 {
     private OrderPlacedService $orderPlacedService;
     private IProductRepository $productRepository;
@@ -24,21 +26,15 @@ class OrderPlacedController extends Controller
         $this->deliveryLocationRepository = $deliveryLocationRepository;
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function checkout(int $product_id)
     {
         $product = $this->productRepository->getById($product_id);
         if (!$product) {
             abort(404);
+        }
+        
+        if(Gate::allows("can-buy-own-products", $product)) {
+            abort(403);
         }
 
         $user = auth()->user();
@@ -52,9 +48,6 @@ class OrderPlacedController extends Controller
             ->with("delivery_locations", $delivery_locations);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(OrderPlacedRequest $orderPlacedRequest): RedirectResponse
     {
         $placedOrderDto = OrderPlacedDto::create($orderPlacedRequest);
@@ -64,11 +57,10 @@ class OrderPlacedController extends Controller
         return redirect()->route("home");
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function mark_as_read(): RedirectResponse
     {
-        //
+        Auth::user()->unreadNotifications->markAsRead();
+
+        return redirect()->back();
     }
 }

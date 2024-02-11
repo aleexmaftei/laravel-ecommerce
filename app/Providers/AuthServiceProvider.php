@@ -3,7 +3,11 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+use App\Enums\RoleEnum;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -21,6 +25,18 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->registerPolicies();
+
+        Gate::define("can-edit-product", static function(User $user, Product $product) {
+            return $user->id === RoleEnum::ADMIN->value || $product->user()->value("id") === $user->id;
+        });
+
+        Gate::define("can-delete-product", static function(User $user) {
+            return $user->id === RoleEnum::ADMIN->value;
+        });
+
+        Gate::define("can-buy-own-products", static function(User $user, Product $product) {
+            return $product->user()->value("id") === $user->id;
+        });
     }
 }

@@ -15,37 +15,48 @@ Route::controller(CategoryController::class)->group(function () {
         ->name("category.show_subcategories");
 });
 
-Route::controller(ProductController::class)->prefix("/category/{category_id}/products")->group(function () {
-    Route::get("/", "index")
-        ->where("category_id", "\d+")
-        ->name("products.index");
-
-    Route::middleware("auth")->group(function () {
-        Route::get("/edit/{product_id}", "edit")
+Route::controller(ProductController::class)->group(function () {
+    Route::prefix("/category/{category_id}/products")->group(function () {
+        Route::get("/", "index")
             ->where("category_id", "\d+")
-            ->where("product_id", "\d+")
-            ->name("products.edit");
+            ->name("products.index");
 
-        Route::put("/edit/{product_id}", "update")
-            ->where("category_id", "\d+")
-            ->where("product_id", "\d+")
-            ->name("products.update");
+        Route::middleware("auth")->group(function () {
+            Route::get("/edit/{product_id}", "edit")
+                ->where("category_id", "\d+")
+                ->where("product_id", "\d+")
+                ->name("products.edit");
 
-        Route::get("/create", "create")
-            ->where("category_id", "\d+")
-            ->name("products.create");
+            Route::put("/edit/{product_id}", "update")
+                ->where("category_id", "\d+")
+                ->where("product_id", "\d+")
+                ->name("products.update");
 
-        Route::post("/create", "store")
-            ->where("category_id", "\d+")
-            ->name("products.store");
+            Route::get("/create", "create")
+                ->where("category_id", "\d+")
+                ->name("products.create");
+
+            Route::post("/create", "store")
+                ->where("category_id", "\d+")
+                ->name("products.store");
+        });
     });
+
+    Route::middleware("auth")
+        ->delete("/destroy/{product_id}", "destroy")
+        ->can("can-delete-product")
+        ->where("product_id", "\d+")
+        ->name("products.destroy");
 });
 
 Route::controller(OrderPlacedController::class)->middleware("auth")->group(function () {
-   Route::post("/", "store")->name("place.order");
-   Route::get("/checkout/product/{product_id}", "checkout")
-       ->where("product_id", "\d+")
-       ->name("order.checkout");
+    Route::post("/", "store")->name("place.order");
+    Route::get("/checkout/product/{product_id}", "checkout")
+        ->where("product_id", "\d+")
+        ->name("order.checkout");
+
+    Route::put("/notifications/mark-as-read", "mark_as_read")
+        ->name("notifications.mark_as_read");
 });
 
 Route::controller(UserController::class)->group(function () {

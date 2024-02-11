@@ -15,10 +15,11 @@ class StoreProductRequest extends FormRequest
     {
         return [
             "name" => ["required", "max:150"],
+            "short_description" => ["nullable", "max:60"],
+            "description" => ["nullable", "max:255"],
             "quantity" => ["required", "numeric", "min:0"],
             "price" => ["required", "numeric", "min:0"],
-            "tva_percentage" => ["required", "numeric", "min:0", "max:100"],
-            "image" => ["required", "image"]
+            "tva_percentage" => ["required", "numeric", "min:0", "max:100"]
         ];
     }
 }

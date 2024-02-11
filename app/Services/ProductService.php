@@ -7,6 +7,7 @@ use App\DTOs\Product\StoreProductDto;
 use App\Repositories\Category\ICategoryRepository;
 use App\Repositories\Product\IProductRepository;
 use App\Services\Base\BaseService;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\ValidationException;
 
 class ProductService extends BaseService
@@ -32,6 +33,8 @@ class ProductService extends BaseService
 
             $product_array = [
                 "name" => $product_dto->name,
+                "short_description" => $product_dto->short_description,
+                "description" => $product_dto->description,
                 "quantity" => $product_dto->quantity,
                 "price" => $product_dto->price,
                 "tva_percentage" => $product_dto->tva_percentage,
@@ -47,20 +50,26 @@ class ProductService extends BaseService
 
     public function update(ProductDto $product_dto, int $product_id)
     {
-        return $this->execute_in_transaction(function () use ($product_dto, $product_id) {
-            $product_to_update = $this->productRepository->getById($product_id);
-            if (!$product_to_update) {
-                abort(404);
-            }
+        $product_to_update = $this->productRepository->getById($product_id);
+        if (!$product_to_update) {
+            abort(404);
+        }
 
+        if (!Gate::allows("can-edit-product", $product_to_update)) {
+            abort(403);
+        }
+
+        return $this->execute_in_transaction(function () use ($product_to_update, $product_dto) {
             $product_array = [
                 "name" => $product_dto->name,
                 "quantity" => $product_dto->quantity,
+                "short_description" => $product_dto->short_description,
+                "description" => $product_dto->description,
                 "price" => $product_dto->price,
                 "tva_percentage" => $product_dto->tva_percentage,
             ];
 
-            return $this->productRepository->update($product_id, $product_array);
+            return $this->productRepository->update($product_to_update->id, $product_array);
         });
     }
 

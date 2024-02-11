@@ -22,6 +22,7 @@ class BaseService
         } catch (Exception $exception) {
             DB::rollBack();
             report($exception);
+            abort(500); // TODO: call exception handler
         }
 
         return $result;
