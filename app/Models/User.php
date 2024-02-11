@@ -48,6 +48,11 @@ class User extends Authenticatable
         return $this->hasMany(OrderPlaced::class, "seller_user_id", "id");
     }
 
+    public function deliveryLocations(): HasMany
+    {
+        return $this->hasMany(DeliveryLocation::class);
+    }
+
     public function hasRole($role): bool
     {
         if ($this->role()->where('name', $role)->first()) {
