@@ -19,7 +19,9 @@ class Product extends Model
         "name",
         "quantity",
         "price",
-        "tva_percentage"
+        "tva_percentage",
+        "short_description",
+        "description"
     ];
 
     protected $guarded = [

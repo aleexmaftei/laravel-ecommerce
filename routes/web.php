@@ -20,15 +20,25 @@ Route::controller(ProductController::class)->prefix("/category/{category_id}/pro
         ->where("category_id", "\d+")
         ->name("products.index");
 
-    Route::get("/edit/{product_id}", "edit")
-        ->where("category_id", "\d+")
-        ->where("product_id", "\d+")
-        ->name("products.edit");
+    Route::middleware("auth")->group(function () {
+        Route::get("/edit/{product_id}", "edit")
+            ->where("category_id", "\d+")
+            ->where("product_id", "\d+")
+            ->name("products.edit");
 
-    Route::put("/edit/{product_id}", "update")
-        ->where("category_id", "\d+")
-        ->where("product_id", "\d+")
-        ->name("products.update");
+        Route::put("/edit/{product_id}", "update")
+            ->where("category_id", "\d+")
+            ->where("product_id", "\d+")
+            ->name("products.update");
+
+        Route::get("/create", "create")
+            ->where("category_id", "\d+")
+            ->name("products.create");
+
+        Route::post("/create", "store")
+            ->where("category_id", "\d+")
+            ->name("products.store");
+    });
 });
 
 Route::controller(OrderPlacedController::class)->middleware("auth")->group(function () {

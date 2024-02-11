@@ -44,13 +44,13 @@ return new class extends Migration {
         Schema::create("product", static function (Blueprint $table) {
             $table->id();
             $table->string("name", 150);
-            $table->binary("image")->nullable();
+            $table->string("short_description", 60)->nullable();
+            $table->string("description", 255)->nullable();
             $table->unsignedInteger("quantity")->default(0);
             $table->unsignedInteger("price");
             $table->unsignedSmallInteger("tva_percentage");
 
             $table->foreignId("user_id")
-                ->nullable()
                 ->references("id")
                 ->on("user")
                 ->noActionOnDelete();

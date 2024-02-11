@@ -46,8 +46,8 @@ class OrderPlacedService extends BaseService
                 throw ValidationException::withMessages(["quantity" => "The desired quantity is exceeding the product quantity available"]);
             }
 
-            $buyer_user_id = auth()->user()->id;
-            if ($buyer_user_id === $bought_product->user_id) {
+            $buyer_user = auth()->user();
+            if ($buyer_user->id === $bought_product->user_id) {
                 throw ValidationException::withMessages(["user_id" => "Can not buy own items"]);
             }
 
@@ -59,16 +59,25 @@ class OrderPlacedService extends BaseService
             $order = [
                 "order_quantity" => $orderPlacedDto->quantity,
                 "product_id" => $bought_product->id,
-                "buyer_user_id" => $buyer_user_id,
+                "buyer_user_id" => $buyer_user->id,
                 "seller_user_id" => $bought_product->user_id,
                 "delivery_location_id" => $delivery_location->id,
             ];
 
             $this->orderPlacedRepository->create($order);
 
-            $this->productService->changeQuantity($bought_product->id, $bought_product->quantity - $orderPlacedDto->quantity);
+            $this->productService->changeQuantity(
+                $bought_product->id,
+                $bought_product->quantity - $orderPlacedDto->quantity
+            );
 
             $this->notificationService->notifyOrderCompleteForUser($bought_product->user_id);
+            $this->notificationService->emailContractForOwnerOnOrderCompleteByUserId(
+                $bought_product->user_id,
+                $bought_product,
+                $orderPlacedDto->quantity,
+                $buyer_user
+            );
         });
     }
 }

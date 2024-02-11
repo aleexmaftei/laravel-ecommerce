@@ -2,22 +2,47 @@
 
 namespace App\Services;
 
-use App\DTOs\ProductDto;
+use App\DTOs\Product\ProductDto;
+use App\DTOs\Product\StoreProductDto;
+use App\Repositories\Category\ICategoryRepository;
 use App\Repositories\Product\IProductRepository;
 use App\Services\Base\BaseService;
+use Illuminate\Validation\ValidationException;
 
 class ProductService extends BaseService
 {
     private IProductRepository $productRepository;
+    private ICategoryRepository $categoryRepository;
 
-    public function __construct(IProductRepository $productRepository)
+    public function __construct(IProductRepository $productRepository, ICategoryRepository $categoryRepository)
     {
         $this->productRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
-    public function store()
+    public function store(StoreProductDto $product_dto, int $category_id)
     {
+        return $this->execute_in_transaction(function () use ($product_dto, $category_id) {
+            $category = $this->categoryRepository->getById($category_id);
+            if (!$category) {
+                throw ValidationException::withMessages(["general_error" => "Not found"]);
+            }
 
+            $current_user_id = auth()->user()->id;
+
+            $product_array = [
+                "name" => $product_dto->name,
+                "quantity" => $product_dto->quantity,
+                "price" => $product_dto->price,
+                "tva_percentage" => $product_dto->tva_percentage,
+                "user_id" => $current_user_id
+            ];
+
+            $product = $this->productRepository->create($product_array);
+            $this->productRepository->createProductCategory($category_id, $product->id);
+
+            return $product;
+        });
     }
 
     public function update(ProductDto $product_dto, int $product_id)

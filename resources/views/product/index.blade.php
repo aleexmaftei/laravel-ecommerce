@@ -11,13 +11,13 @@
                         <div class="card-body d-inline-flex">
                             <div class="image">
                                 <img alt="Product image"
-                                     src="{{ $product->image }}"/>
+                                     src="https://source.unsplash.com/random"/>
                             </div>
 
                             <div class="product-content">
                                 <div class="product-details">
                                     <h4 class="card-title">{{ $product->name }}</h4>
-                                    <p class="card-text">product short description</p>
+                                    <p class="card-text">{{ $product->short_description }}</p>
                                 </div>
 
                                 <div class="price">
