@@ -3,13 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use HasTimestamps, SoftDeletes;
+    use HasTimestamps, SoftDeletes, HasFactory;
 
     protected $table = "category";
 
@@ -18,13 +20,13 @@ class Category extends Model
         "parent_category_id"
     ];
 
-    public function category(): BelongsToMany
+    public function category(): HasMany
     {
-        return $this->belongsToMany("App/Models/Category", "id");
+        return $this->HasMany(__CLASS__, "Id", "parent_category_id");
     }
 
-    public function product(): BelongsToMany
+    public function productCategories(): HasMany
     {
-        return $this->belongsToMany("App/Models/Product", "id");
+        return $this->hasMany(ProductCategory::class);
     }
 }

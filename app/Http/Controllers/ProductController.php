@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\DTOs\ProductDto;
-use App\Http\Requests\ProductRequest;
+use App\DTOs\Product\ProductDto;
+use App\DTOs\Product\StoreProductDto;
+use App\Http\Requests\Product\ProductRequest;
+use App\Http\Requests\Product\StoreProductRequest;
 use App\Repositories\Product\IProductRepository;
 use App\Services\ProductService;
 use Illuminate\Http\RedirectResponse;
@@ -21,20 +23,28 @@ class ProductController extends BaseController
 
     public function index(int $category_id)
     {
-        $products = $this->productRepository->get();
+        $products = $this->productRepository->getProductsByCategoryId($category_id);
         return View("product.index")
             ->with("category_id", $category_id)
             ->with("products", $products);
     }
 
-    public function create()
+    public function create(int $category_id)
     {
-        //
+        return View("product.create")
+            ->with("category_id", $category_id);
     }
 
-    public function store(ProductRequest $request)
+    public function store(StoreProductRequest $storeProductRequest, int $category_id): RedirectResponse
     {
-        //
+        $storeProductDto = StoreProductDto::create($storeProductRequest);
+
+        $response = $this->productService->store($storeProductDto, $category_id);
+        if (!$response) {
+            abort(404);
+        }
+
+        return redirect()->route("products.index", [$category_id]);
     }
 
     public function show(string $id)

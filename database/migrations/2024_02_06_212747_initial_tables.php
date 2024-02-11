@@ -1,6 +1,5 @@
 <?php
 
-use Database\Seeders\RoleSeeder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -45,10 +44,17 @@ return new class extends Migration {
         Schema::create("product", static function (Blueprint $table) {
             $table->id();
             $table->string("name", 150);
-            $table->binary("image")->nullable();
+            $table->string("short_description", 60)->nullable();
+            $table->string("description", 255)->nullable();
             $table->unsignedInteger("quantity")->default(0);
             $table->unsignedInteger("price");
             $table->unsignedSmallInteger("tva_percentage");
+
+            $table->foreignId("user_id")
+                ->references("id")
+                ->on("user")
+                ->noActionOnDelete();
+
             $table->timestamps();
             $table->softDeletes();
         });
@@ -77,16 +83,16 @@ return new class extends Migration {
             $table->string("region_name", 100);
             $table->string("city_name", 100);
             $table->string("address_detail", 255);
-            $table->unsignedInteger("postal_code");
+            $table->string("postal_code", 100);
+
             $table->foreignId("user_id")
                 ->references("id")
                 ->on("user")
                 ->cascadeOnDelete();
-        });
 
-        // Production data seeding
-        $seeder = new RoleSeeder();
-        $seeder->run();
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
 
     public function down(): void

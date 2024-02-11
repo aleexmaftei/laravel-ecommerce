@@ -22,7 +22,7 @@
                             <a href="{{ route("category.show_subcategories", ["category_id" => $category->id]) }}">
                                 <div class="d-inline-flex align-items-center">
                                     <img class="image" alt="Product category image"
-                                         src="https://www.imgonline.com.ua/examples/enlarged-photo.jpg"/>
+                                         src="https://source.unsplash.com/random"/>
                                     <div>
                                         <span>{{ $category->name }}</span>
                                     </div>
@@ -38,7 +38,7 @@
                             <a href="{{ route("products.index", ["category_id" => $subcategory->id]) }}">
                                 <div class="d-inline-flex align-items-center">
                                     <img class="image" alt="Product category image"
-                                         src="https://www.imgonline.com.ua/examples/enlarged-photo.jpg"/>
+                                         src="https://source.unsplash.com/random"/>
                                     <div>
                                         <span>{{ $subcategory->name }}</span>
                                     </div>

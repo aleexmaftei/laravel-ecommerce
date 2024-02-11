@@ -4,7 +4,7 @@ html {
 }
 
 body {
-    background: #3b3b3b;
+    background: #f7f7f7;
     margin: 0;
     display: block;
     font-family: "Open Sans", Verdana, Tahoma, Arial, Helvetica, sans-serif;
@@ -12,7 +12,7 @@ body {
 }
 
 .eCommerce-page {
-    background: rgba(243,243,243,255);
+    background: #f7f7f7;
     max-width: 1440px;
     min-width: 700px;
     margin: 0 auto;
@@ -37,7 +37,40 @@ body {
 label {
     span {
         color: #495057;
-        margin-left: 0.5rem;
         font-size: 16px;
     }
 }
+
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined', serif;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px; /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+}
+
+nav {
+    .icon-class {
+        position: relative;
+
+        .icon-number {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: block;
+        }
+    }
+
+    .nav-link {
+        color: white;
+    }
+}
+
+
+

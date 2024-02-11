@@ -38,7 +38,7 @@
             <div class="form-group">
                 <label for="tva_percentage">
                     <span>TVA percentage</span>
-                    <input class="form-control" type="number" name="tva_percentage"
+                    <input class="form-control" type="number" name="tva_percentage" min="0" max="100"
                            value="{{ old("tva_percentage", $product->tva_percentage) }}"/>
                 </label>
 
