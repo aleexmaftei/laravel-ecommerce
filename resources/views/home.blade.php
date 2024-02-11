@@ -1,5 +1,6 @@
 <div class="title-wrapper">
     <div class="d-flex justify-content-center">
-        <span>Welcome to Fortissimo</span>
+        <h1>Welcome to eCommerce-laravel</h1>
     </div>
+    <br />
 </div>
